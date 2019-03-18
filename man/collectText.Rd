@@ -19,7 +19,7 @@ potential sections and exported as list.}
 A \code{character} or \code{list} object of Bill Texts.
 }
 \description{
-Collect information regarding Latest Full Text of the bill.
+Collect information regarding the latest full text of the bill.
 }
 \examples{
 tgturl <- "https://www.congress.gov/bill/116th-congress/senate-bill/252"

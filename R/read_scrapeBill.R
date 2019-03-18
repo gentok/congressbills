@@ -14,30 +14,45 @@
 #' 
 #' @export
 read_scrapeBill = function(file) {
+
   #load from file
   x = readRDS(file)
   
-  #read
-  if (is.list(x)) {
-    x <- Map(read_html, x)
-  } else {
-    x <- read_html(x)
+  readF <- function(k) {
+    k$info <- read_html(k$info)
+    k$text <- read_html(k$text)
+    return(k)
   }
   
-  x
+  # Read
+  if (class(x)[1]=="scrapeBill") {
+    x <- readF(x)
+    class(x) <- "scrapeBill"
+  } else if (class(x)[1]=="list" & class(x[[1]])=="scrapeBill") {
+    x <- lapply(x, readF)
+    for (i in 1:length(x)) class(x[[i]]) <- "scrapeBill"
+  } else {
+    stop("invalid object type.")
+  }
+  
+  return(x)
 }
 
 #' @rdname read_scrapeBill
 #' @export
 write_scrapeBill = function(x, file, ...) {
-  #convert to character
-  #is list?
-  if (is.list(x)) {
-    x = Map(as.character, x)
-  } else {
-    x = Map(as.character, x)
-  }
   
+  #convert to character
+  if (class(x)[1]=="scrapeBill") {
+    x <- lapply(x, as.character)
+    class(x) <- "scrapeBill"
+  } else if (class(x)[1]=="list" & class(x[[1]])=="scrapeBill") {
+    x <- lapply(x, function(k) lapply(k, as.character))
+    for (i in 1:length(x)) class(x[[i]]) <- "scrapeBill"
+  } else {
+    stop("invalid object type.")
+  }
+
   #save
   saveRDS(x, file = file, ...)
 }
