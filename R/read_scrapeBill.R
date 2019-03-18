@@ -2,8 +2,6 @@
 #' 
 #' @description Write (especially a list of) \code{scrapeBill} object. 
 #' 
-#' @references \url{https://stackoverflow.com/questions/37703689/cannot-save-load-xml-document-generated-from-rvest-in-r} 
-#' 
 #' @param x A (or A list of) \code{scrapeBill} object created by \code{\link{scrapeBill}} function.
 #' @param file A connection or the name of the file (use \code{.rds} extension).
 #' @param ... Additional argument passed to \code{\link[base]{saveRDS}}
