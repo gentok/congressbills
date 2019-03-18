@@ -7,7 +7,7 @@
 \usage{
 read_scrapeBill(file)
 
-write_scrapeBill(x, file, ...)
+write_scrapeBill(x, file, aux = FALSE, ...)
 }
 \arguments{
 \item{file}{A connection or the name of the file (use \code{.rds} extension).}
@@ -24,7 +24,4 @@ auxiliary files under \code{FILENAME_files} folder. DON'T delete the folder.
 }
 \description{
 Write (especially a list of) \code{scrapeBill} object.
-}
-\references{
-\url{https://stackoverflow.com/questions/37703689/cannot-save-load-xml-document-generated-from-rvest-in-r}
 }
