@@ -1050,7 +1050,7 @@ collectSubject <- function(x,
 
 #' Collecting Text Information from a \code{scrapeBill} Object.
 #' 
-#' @description Collect information regarding Latest Full Text of the bill.
+#' @description Collect information regarding the latest full text of the bill.
 #' 
 #' @param x A (or A list of) \code{scrapeBill} object created by \code{\link{scrapeBill}} function.
 #' @param allinone If \code{TRUE} (default), the function returns all texts of 
