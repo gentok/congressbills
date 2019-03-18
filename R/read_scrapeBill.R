@@ -81,8 +81,11 @@ write_scrapeBill <- function(x, file, aux=FALSE,...) {
   }
 
   locback <- function(obj, aux) {
+    
+    # Save as nodeset
+    obj <- html_nodes(obj, xpath="/html")
+
     if (aux==TRUE) {
-      obj <- html_nodes(obj, xpath="/html")
       tf <- tempfile(tmpdir=dirloc)
       con <- file(tf, "wb")
       on.exit(close(con), add = TRUE)
