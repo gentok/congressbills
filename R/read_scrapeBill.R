@@ -22,7 +22,7 @@
 #' @export
 read_scrapeBill <- function(file) {
   
-  filename <- basename(tools::file_path_sans_ext(file))
+  filename <- basename(file_path_sans_ext(file))
   foldername <- paste0(filename,"_files")
   dirloc <- paste(dirname(file),foldername,sep="/")
   if (dir.exists(dirloc)==FALSE) stop("auxiliary files not found!")
@@ -62,7 +62,7 @@ read_scrapeBill <- function(file) {
 #' @export
 write_scrapeBill <- function(x, file, ...) {
   
-  filename <- basename(tools::file_path_sans_ext(file))
+  filename <- basename(file_path_sans_ext(file))
   foldername <- paste0(filename,"_files")
   dirloc <- paste(dirname(file),foldername,sep="/")
   if (dir.exists(dirloc)==TRUE) {
