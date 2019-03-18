@@ -17,7 +17,10 @@ write_scrapeBill(x, file, ...)
 \item{...}{Additional argument passed to \code{\link[base]{saveRDS}}}
 }
 \value{
-For \code{read_scrapeBill}, an \code{R} object. For \code{write_scrapeBill}, \code{NULL} invisibly.
+For \code{read_scrapeBill}, an \code{R} object. 
+For \code{write_scrapeBill}, \code{NULL} invisibly. \code{write_scrapeBill} also writes out 
+auxiliary files under \code{FILENAME_files} folder. DON'T delete the folder. 
+\code{read_scrapeBill} will need the files in the folder to read file.
 }
 \description{
 Write (especially a list of) \code{scrapeBill} object.
