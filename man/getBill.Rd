@@ -58,7 +58,7 @@ a <- data.frame(number = c(1,2,3,4),
                 congress = c(103,104,108,109),
                 chamber = "House",
                 type = "Bill")
-b <- getBillDF(a)
+b <- getBillDF(a, out="scrapeBill")
 collectBillID(b)
                 
 }

@@ -99,7 +99,7 @@ scrapeBill <- function(url, progress=TRUE) {
 #'                 congress = c(103,104,108,109),
 #'                 chamber = "House",
 #'                 type = "Bill")
-#' b <- getBillDF(a)
+#' b <- getBillDF(a, out="scrapeBill")
 #' collectBillID(b)
 #'                 
 #' @importFrom pbapply pbapply
