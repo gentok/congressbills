@@ -3,7 +3,8 @@ Developped by Gento Kato (Last Updated: 03/19/2019)
 
 ## Description
 
-Extract and manipulate bill information from [US Congress website](https://www.congress.gov).
+Extract and manipulate bill information from [US Congress website](https://www.congress.gov). 
+The package website is published [HERE](https://gentok.github.io/congressbills/).
 
 ## Installation
 
