@@ -68,3 +68,6 @@ bill2 <- scrapeBill(tgturl)
 collectAction(bill2)
  
 }
+\seealso{
+\code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
+}

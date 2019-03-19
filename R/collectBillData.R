@@ -15,6 +15,8 @@
 #' @importFrom stringr str_c
 #' @importFrom pbapply pbsapply
 #' 
+#' @seealso \code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
+#' 
 #' @examples 
 #' tgturl <- "https://www.congress.gov/bill/109th-congress/house-bill/247"
 #' bill247 <- scrapeBill(tgturl)
@@ -117,6 +119,8 @@ collectBillID <- function(x, progress=FALSE) {
 #' @importFrom pbapply pbsapply
 #' @importFrom pbapply pblapply
 #' 
+#' @seealso \code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
+#' 
 #' @examples 
 #' tgturl <- "https://www.congress.gov/bill/109th-congress/house-bill/247"
 #' bill247 <- scrapeBill(tgturl)
@@ -149,7 +153,7 @@ collectTitle <- function(x,
     otloc <- which(acls=="officialTitles")
     ot <- a[otloc:length(a)]
     # Official Title Timing
-    otmeta <- ot %>% html_nodes("h4") %>% html_text
+    otmeta <- ot %>% html_nodes(xpath=".//h4|.//h5") %>% html_text
     otmeta1 <- otmeta[grep("Official Title(s|) (as|on)", otmeta)]
     otmeta1 <- gsub("Official Title(s|) ","", otmeta1)
     # Official Titles Chamber
@@ -178,14 +182,13 @@ collectTitle <- function(x,
     if (length(stloc)==1) {
       st <- a[seq(stloc,otloc-1,1)]
       # Short Title Timing
-      stmeta <- st %>% html_nodes("h4") %>% html_text
-      stmeta1 <- stmeta[grep("Short Title(s|) (as|on)", stmeta)]
+      stmeta <- st %>% html_nodes(xpath=".//h4|.//h5") %>% html_text()
+      stmeta1 <- stmeta[grep("Short Title(s|) (as|on)|Other Short Titles", stmeta)]
       stmeta1 <- gsub("Short Title(s|) ","", stmeta1)
-      stmeta1
       # Short Titles Chamber
       stdivide <- grep("Short Title(s|) - ", stmeta)
       stmeta2 <-  splitAt(stmeta, stdivide)
-      stmeta2 <- sapply(stmeta2, function(k) length(k[grep("Short Title(s|) (as|on)", k)]))
+      stmeta2 <- sapply(stmeta2, function(k) length(k[grep("Short Title(s|) (as|on)|Other Short Titles", k)]))
       if (stdivide[1]==1) {
         stnames <- stmeta[grep("Short Title(s|) - ", stmeta)]
       } else {
@@ -194,17 +197,23 @@ collectTitle <- function(x,
       stmeta2 <- rbind(stmeta2, stnames)
       stmeta2 <- unlist(apply(stmeta2, 2, function(k) rep(k[2],k[1])))
       stmeta2 <- str_extract(stmeta2, "House|Senate|Unspecified")
-      stmeta1
       # Short Titles Text
-      sttext <- st %>% html_nodes("p") %>% html_text
-      st
-      sttext
+      sttext <- st %>% html_nodes(xpath=".//p|.//ul") %>% html_text
+      sttext <- str_squish(sttext)
       # Compile into Data
-      stdata <- data.frame(Type = "Short",
+      stdata <- try(data.frame(Type = "Short",
                            Chamber = rev(stmeta2),
                            Timing = rev(stmeta1),
                            Text = sttext, 
-                           stringsAsFactors = FALSE)
+                           stringsAsFactors = FALSE))
+      if (class(stdata)[1]=="try-error") {
+        if (officialonly==FALSE) warning("Short Title Data Extraction Failed!")
+        stdata <- data.frame(Type = character(),
+                             Chamber = character(),
+                             Stage = character(),
+                             Text = character(), 
+                             stringsAsFactors = FALSE)
+      }
     } else {
       stdata <- data.frame(Type = character(),
                            Chamber = character(),
@@ -260,8 +269,6 @@ collectTitle <- function(x,
   
 }
 
-
-
 #' Collecting Summary Information from a \code{scrapeBill} Object.
 #' 
 #' @description Collect information regarding summary of the bill.
@@ -283,6 +290,8 @@ collectTitle <- function(x,
 #' @importFrom stringr str_extract
 #' @importFrom pbapply pbsapply
 #' @importFrom pbapply pblapply
+#' 
+#' @seealso \code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
 #' 
 #' @examples 
 #' tgturl <- "https://www.congress.gov/bill/109th-congress/house-bill/247"
@@ -423,6 +432,8 @@ collectSummary <- function(x,
 #' @importFrom stringr str_extract
 #' @importFrom pbapply pbsapply
 #' @importFrom pbapply pblapply
+#' 
+#' @seealso \code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
 #' 
 #' @examples 
 #' tgturl <- "https://www.congress.gov/bill/109th-congress/house-bill/19"
@@ -612,6 +623,8 @@ collectSponsorship <- function(x,
 #' @importFrom stringr str_squish
 #' @importFrom pbapply pbsapply
 #' @importFrom pbapply pblapply
+#' 
+#' @seealso \code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
 #' 
 #' @examples 
 #' tgturl <- "https://www.congress.gov/bill/115th-congress/house-bill/2"
@@ -833,6 +846,8 @@ collectAction <- function(x,
 #' @importFrom pbapply pbsapply
 #' @importFrom pbapply pblapply
 #' 
+#' @seealso \code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
+#' 
 #' @examples 
 #' tgturl <- "https://www.congress.gov/bill/116th-congress/senate-bill/252"
 #' bill252 <- scrapeBill(tgturl)
@@ -971,6 +986,8 @@ collectCommittee <- function(x,
 #' @importFrom pbapply pbsapply
 #' @importFrom pbapply pblapply
 #' 
+#' @seealso \code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
+#' 
 #' @examples 
 #' tgturl <- "https://www.congress.gov/bill/116th-congress/senate-bill/252"
 #' bill252 <- scrapeBill(tgturl)
@@ -1070,6 +1087,8 @@ collectSubject <- function(x,
 #' @importFrom stringr str_split
 #' @importFrom pbapply pbsapply
 #' @importFrom pbapply pblapply
+#' 
+#' @seealso \code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
 #' 
 #' @examples 
 #' tgturl <- "https://www.congress.gov/bill/116th-congress/senate-bill/252"
@@ -1198,7 +1217,14 @@ collectText <- function(x,
 #' \code{"Subject"}, and \code{"Text"}. CANNOT set more than one option.
 #' @param progress If \code{TRUE}, show progress bar for the processing of multiple bills.
 #' 
-#' @return A \code{data.frame} object of bill information.
+#' @return A \code{data.frame} object of bill information. See 
+#' functions in \emph{See Also} section for variable details.
+#' 
+#' @seealso \code{\link{collectBillID}}, \code{\link{collectTitle}}, 
+#' \code{\link{collectSummary}}, \code{\link{collectSponsorship}},
+#' \code{\link{collectAction}}, \code{\link{collectCommittee}}, 
+#' \code{\link{collectSubject}}, \code{\link{collectText}}, 
+#' \code{\link{scrapeBill}}, and \code{\link{getscrapeBill}}
 #' 
 #' @examples 
 #' tgturl <- "https://www.congress.gov/bill/116th-congress/senate-bill/252"

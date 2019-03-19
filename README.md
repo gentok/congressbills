@@ -11,7 +11,8 @@ Extract and manipulate bill information from [US Congress website](https://www.c
 
 ## Main Functions
 
-* <code>scrapeBill</code> Scrape bill information from Congress website using bill page URL.
+* <code>getBill</code> Get bill summary page URL (or <code>scrapeBill</code> object) from bill and congress number.
+* <code>scrapeBill</code> Scrape bill information from Congress website using bill summary page URL.
 * <code>collectBillData</code> Collect information of Congress bill from <code>scrapeBill</code> object.
 * <code>read_scrapeBill</code> Import a (or a list of) <code>scrapeBill</code> object saved as <code>.rds</code> file.
 * <code>write_scrapeBill</code> Write a (or a list of) <code>scrapeBill</code> object into <code>.rds</code> file.
@@ -29,3 +30,4 @@ Extract and manipulate bill information from [US Congress website](https://www.c
 ## Updates Log
 
 * 03/18/2019 Version 0.0.0.001 released
+* 03/18/2019 Version 0.0.0.002 bug fix and adding getBill function.

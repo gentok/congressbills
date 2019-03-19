@@ -4,8 +4,12 @@
 #' 
 #' @param x A (or A list of) \code{scrapeBill} object created by \code{\link{scrapeBill}} function.
 #' @param file A connection or the name of the file (use \code{.rds} extension).
-#' @param aux Whether to export auxiliary files into separate folder when \code{write_scrapeBill}. 
-#' Set to \code{TRUE} if you want to avoid the \code{.rds} file size to become too big.
+#' @param aux Whether to export auxiliary files into separate folder when \code{write_scrapeBill}.
+#' If \code{"None"} (default), do not export any auxiliary file. If \code{"raw"}, export
+#' raw serialized XML vectors. If \code{"html"}, export HTML files.   
+#' Set to \code{"raw"} or \code{"html"} if you want to avoid the \code{.rds} file 
+#' size to become too big 
+#' (Although the auxiliary files folder size tend to become very big). 
 #' @param ... Additional argument passed to \code{\link[base]{saveRDS}}
 #' 
 #' @return For \code{read_scrapeBill}, an \code{R} object. 
@@ -13,11 +17,20 @@
 #' writes out auxiliary files under \code{FILENAME_files} folder, DON'T delete the 
 #' folder. \code{read_scrapeBill} will need the files in the folder to read file.
 #' 
+#' @seealso \code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
+#' 
+#' @examples
+#' tgturl <- "https://www.congress.gov/bill/116th-congress/senate-bill/252"
+#' bill252 <- scrapeBill(tgturl)
+#' write_scrapeBill(bill252, "bill252.rds")
+#' test <- read_scrapeBill("bill252.rds")
+#'  
 #' @importFrom xml2 xml_serialize
 #' @importFrom xml2 xml_unserialize
 #' @importFrom tools file_path_sans_ext
 #' @importFrom pbapply pblapply
 #' @importFrom rvest html_nodes
+#' @importFrim stats rbinom
 #' 
 #' @export
 read_scrapeBill <- function(file) {
@@ -49,6 +62,7 @@ read_scrapeBill <- function(file) {
     k$info <- xmlback(k$info)
     k$text <- xmlback(k$text)
     class(k) <- "scrapeBill"
+    if (rbinom(1,1,0.05)==1) Sys.sleep(0.1)
     return(k)
   }
   
@@ -66,9 +80,9 @@ read_scrapeBill <- function(file) {
 
 #' @rdname read_scrapeBill
 #' @export
-write_scrapeBill <- function(x, file, aux=FALSE,...) {
+write_scrapeBill <- function(x, file, aux="None",...) {
   
-  if (aux==TRUE) {
+  if (aux!="None") {
     filename <- basename(file_path_sans_ext(file))
     foldername <- paste0(filename,"_files")
     dirloc <- paste(dirname(file),foldername,sep="/")
@@ -83,16 +97,22 @@ write_scrapeBill <- function(x, file, aux=FALSE,...) {
   locback <- function(obj, aux) {
     
     # Save as nodeset
-    obj <- html_nodes(obj, xpath="/html")
+    if (class(obj)[1]=="xml_document") {
+      obj <- html_nodes(obj, xpath="/html")
+    }
 
-    if (aux==TRUE) {
+    if (aux=="None") {
+      res <- xml_serialize(obj, NULL)
+    } else if (aux=="raw") {
       tf <- tempfile(tmpdir=dirloc)
       con <- file(tf, "wb")
       on.exit(close(con), add = TRUE)
       xml_serialize(obj, con)
       res <- basename(tf)
+    } else if (aux=="html") {
+      
     } else {
-      res <- xml_serialize(obj, NULL)
+      stop("invalid aux argument!")
     }
     return(res)
   }

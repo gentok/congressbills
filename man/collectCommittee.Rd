@@ -41,3 +41,6 @@ bill252 <- scrapeBill(tgturl)
 collectCommittee(bill252)
 
 }
+\seealso{
+\code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
+}

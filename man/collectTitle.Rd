@@ -27,3 +27,6 @@ bill247 <- scrapeBill(tgturl)
 collectTitle(bill247)
 
 }
+\seealso{
+\code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
+}

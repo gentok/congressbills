@@ -7,21 +7,38 @@
 \usage{
 read_scrapeBill(file)
 
-write_scrapeBill(x, file, aux = FALSE, ...)
+write_scrapeBill(x, file, aux = "None", ...)
 }
 \arguments{
 \item{file}{A connection or the name of the file (use \code{.rds} extension).}
 
 \item{x}{A (or A list of) \code{scrapeBill} object created by \code{\link{scrapeBill}} function.}
 
+\item{aux}{Whether to export auxiliary files into separate folder when \code{write_scrapeBill}.
+If \code{"None"} (default), do not export any auxiliary file. If \code{"raw"}, export
+raw serialized XML vectors. If \code{"html"}, export HTML files.   
+Set to \code{"raw"} or \code{"html"} if you want to avoid the \code{.rds} file 
+size to become too big 
+(Although the auxiliary files folder size tend to become very big).}
+
 \item{...}{Additional argument passed to \code{\link[base]{saveRDS}}}
 }
 \value{
 For \code{read_scrapeBill}, an \code{R} object. 
-For \code{write_scrapeBill}, \code{NULL} invisibly. \code{write_scrapeBill} also writes out 
-auxiliary files under \code{FILENAME_files} folder. DON'T delete the folder. 
-\code{read_scrapeBill} will need the files in the folder to read file.
+For \code{write_scrapeBill}, \code{NULL} invisibly. If \code{write_scrapeBill}
+writes out auxiliary files under \code{FILENAME_files} folder, DON'T delete the 
+folder. \code{read_scrapeBill} will need the files in the folder to read file.
 }
 \description{
 Write (especially a list of) \code{scrapeBill} object.
+}
+\examples{
+tgturl <- "https://www.congress.gov/bill/116th-congress/senate-bill/252"
+bill252 <- scrapeBill(tgturl)
+write_scrapeBill(bill252, "bill252.rds")
+test <- read_scrapeBill("bill252.rds")
+ 
+}
+\seealso{
+\code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
 }

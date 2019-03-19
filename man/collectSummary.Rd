@@ -28,3 +28,6 @@ bill247 <- scrapeBill(tgturl)
 collectSummary(bill247)
 
 }
+\seealso{
+\code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
+}

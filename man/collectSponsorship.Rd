@@ -52,3 +52,6 @@ bill19 <- scrapeBill(tgturl)
 collectSponsorship(bill19)
 
 }
+\seealso{
+\code{\link{scrapeBill}} and \code{\link{getscrapeBill}}
+}

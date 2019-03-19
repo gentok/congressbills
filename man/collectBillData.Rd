@@ -30,7 +30,8 @@ Choose option from ONE of \code{"Title"},
 \item{progress}{If \code{TRUE}, show progress bar for the processing of multiple bills.}
 }
 \value{
-A \code{data.frame} object of bill information.
+A \code{data.frame} object of bill information. See 
+functions in \emph{See Also} section for variable details.
 }
 \description{
 Collect Bill Information and Put Into Data Frame.
@@ -40,4 +41,11 @@ tgturl <- "https://www.congress.gov/bill/116th-congress/senate-bill/252"
 bill252 <- scrapeBill(tgturl)
 collectBillData(bill252)
 
+}
+\seealso{
+\code{\link{collectBillID}}, \code{\link{collectTitle}}, 
+\code{\link{collectSummary}}, \code{\link{collectSponsorship}},
+\code{\link{collectAction}}, \code{\link{collectCommittee}}, 
+\code{\link{collectSubject}}, \code{\link{collectText}}, 
+\code{\link{scrapeBill}}, and \code{\link{getscrapeBill}}
 }
