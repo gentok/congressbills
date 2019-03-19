@@ -30,7 +30,7 @@
 #' @importFrom tools file_path_sans_ext
 #' @importFrom pbapply pblapply
 #' @importFrom rvest html_nodes
-#' @importFrim stats rbinom
+#' @importFrom stats rbinom
 #' 
 #' @export
 read_scrapeBill <- function(file) {
