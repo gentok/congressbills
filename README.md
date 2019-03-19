@@ -19,6 +19,7 @@ Extract and manipulate bill information from [US Congress website](https://www.c
 
 ## Supplemental Functions
 
+* <code>BillIDfromURL</code> Collect Bill ID from bill summary page URL(s).
 * <code>collectBillID</code> Collect information that identifies bill from <code>scrapeBill</code> object.
 * <code>collectTitle</code> Collect information regarding title(s) of the bill from <code>scrapeBill</code> object.
 * <code>collectSummary</code> Collect information regarding summary of the bill from <code>scrapeBill</code> object.
@@ -29,5 +30,6 @@ Extract and manipulate bill information from [US Congress website](https://www.c
 
 ## Updates Log
 
+* 03/19/2019 Version 0.0.0.003 bug fix and add BillIDfromURL function
+* 03/19/2019 Version 0.0.0.002 bug fix and adding getBill function
 * 03/18/2019 Version 0.0.0.001 released
-* 03/18/2019 Version 0.0.0.002 bug fix and adding getBill function.

@@ -53,6 +53,7 @@ scrapeBill <- function(url, progress=TRUE) {
     } else {
       resx <- lapply(url, scrapeBill1)
     }
+    names(resx) <- BillIDfromURL(url)
   } else {
     stop("url has length 0!")
   }
@@ -121,7 +122,8 @@ getBill <- function(number,
   if (length(grep("1$", congress))==1) pf <- "st-congress"
   if (length(grep("2$", congress))==1) pf <- "nd-congress"
   if (length(grep("3$", congress))==1) pf <- "rd-congress"
-  
+  if (length(grep("(11|12|13)$", congress))==1) pf <- "th-congress"
+
   # Congress part
   if (length(congress)==1 & is.numeric(congress)) {
     c <- paste0(congress, pf)
@@ -232,3 +234,44 @@ getscrapeBillDF <- function(infoDF,
   
 }
 
+#' Get Bill ID from URL
+#' 
+#' @description Get Bill ID from URL
+#' 
+#' @param url \code{character} scalar of vector of Bill Summary Page URL(s)
+#' 
+#' @return \code{character} scalar of Bill ID.
+#' 
+#' @importFrom stringr str_split
+#' @importFrom stringr str_extract
+#' @importFrom stringr str_c
+#' 
+#' @export
+
+BillIDfromURL <- function(url) {
+  
+  BillIDfromURL1 <- function(url) {
+    a <- gsub("https\\://www.congress.gov/bill/","",url)
+    a <- str_split(a, "/")[[1]]
+    
+    cong <- as.numeric(str_extract(a[1], "^[[:digit:]]+"))
+    number <- as.numeric(a[3])
+    chab <- toupper(paste(str_extract(str_split(a[2], "-")[[1]], "^[[:alpha:]]"),
+                          collapse=""))
+    chab <- gsub("B","", chab)
+    
+    id <- str_c(chab, sprintf("%03.0f", cong), sprintf("%05.0f", number))
+    return(id)
+  }
+  
+  if (length(url)==1) {
+    idx <- BillIDfromURL1(url)
+  } else if (length(url)>1) {
+    idx <- sapply(url, BillIDfromURL1)
+  } else {
+    stop("url has length 0!")
+  }
+  
+  return(idx)
+  
+}

@@ -5,12 +5,15 @@
 \alias{write_scrapeBill}
 \title{Read and write \code{scrapeBill} Object}
 \usage{
-read_scrapeBill(file)
+read_scrapeBill(file, subset = NULL)
 
 write_scrapeBill(x, file, aux = "None", ...)
 }
 \arguments{
-\item{file}{A connection or the name of the file (use \code{.rds} extension).}
+\item{file}{A \code{\link[base]{connection}} or the name of the file (use \code{.rds} extension).}
+
+\item{subset}{\code{numeric} vector of subset locations if reading only the 
+subset of a list of \code{scrapeBill} object.}
 
 \item{x}{A (or A list of) \code{scrapeBill} object created by \code{\link{scrapeBill}} function.}
 
@@ -30,7 +33,7 @@ writes out auxiliary files under \code{FILENAME_files} folder, DON'T delete the
 folder. \code{read_scrapeBill} will need the files in the folder to read file.
 }
 \description{
-Write (especially a list of) \code{scrapeBill} object.
+Read and write a (or a list of) \code{scrapeBill} object.
 }
 \examples{
 tgturl <- "https://www.congress.gov/bill/116th-congress/senate-bill/252"
