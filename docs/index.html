@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">congressbills</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.0.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.1.1</span>
       </span>
     </div>
 
@@ -59,7 +59,7 @@
     <div id="congressbills-package" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#congressbills-package" class="anchor"></a><code>congressbills</code> Package</h1></div>
-<p>Developped by Gento Kato (Last Updated: 03/19/2019)</p>
+<p>Developped by Gento Kato (Last Updated: 06/21/2019)</p>
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"></a>Description</h2>
@@ -74,6 +74,8 @@
 <h2 class="hasAnchor">
 <a href="#main-functions" class="anchor"></a>Main Functions</h2>
 <ul>
+<li>
+<code>searchBill</code> Search bills by keywords and other conditions.</li>
 <li>
 <code>getBill</code> Get bill summary page URL (or <code>scrapeBill</code> object) from bill and congress number.</li>
 <li>
@@ -101,6 +103,8 @@
 <li>
 <code>collectSponsorship</code> Collect information regarding sponsorship of the bill from <code>scrapeBill</code> object.</li>
 <li>
+<code>collectAction</code> Collect information regarding actions of the bill from <code>scrapeBill</code> object.</li>
+<li>
 <code>collectCommittee</code> Collect information regarding committees considering the bill from <code>scrapeBill</code> object.</li>
 <li>
 <code>collectSubject</code> Collect information regarding subject field of the bill from <code>scrapeBill</code> object.</li>
@@ -112,6 +116,7 @@
 <h2 class="hasAnchor">
 <a href="#updates-log" class="anchor"></a>Updates Log</h2>
 <ul>
+<li>06/21/2019 Version 0.0.1.001 Adding searchBill and small change in collectAction output.</li>
 <li>03/19/2019 Version 0.0.0.003 bug fix and add BillIDfromURL function</li>
 <li>03/19/2019 Version 0.0.0.002 bug fix and adding getBill function</li>
 <li>03/18/2019 Version 0.0.0.001 released</li>

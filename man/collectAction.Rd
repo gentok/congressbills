@@ -10,7 +10,7 @@ collectAction(x, latestonly = TRUE, progress = FALSE)
 \item{x}{A (or A list of) \code{scrapeBill} object created by \code{\link{scrapeBill}} function.}
 
 \item{latestonly}{If \code{TRUE} (default), the function returns summary of 
-latest actions in single row. If \code{FALSE}, the function returns \code{data.frame} 
+latest actions (and introduced date) in single row. If \code{FALSE}, the function returns \code{data.frame} 
 object of all actions and their dates and timings.}
 
 \item{progress}{If \code{TRUE}, show progress bar for the processing of multiple bills.}
@@ -19,6 +19,7 @@ object of all actions and their dates and timings.}
 If \code{latestonly==TRUE}, returns \code{data.frame} object with following 
 contents (single row):
 \itemize{
+  \item \code{IntroducedDate}: Date of Introduction in Actions Overview
   \item \code{ActLatestDate_Overview}: Date of Latest Action in Actions Overview
   \item \code{ActLatestText_Overview}: Overview Content of Latest Action in Actions Overview
   \item \code{ActLatestDate_All}: Date of Latest Action in All Actions

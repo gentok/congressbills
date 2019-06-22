@@ -566,13 +566,14 @@ collectSponsorship <- function(x,
 #' 
 #' @param x A (or A list of) \code{scrapeBill} object created by \code{\link{scrapeBill}} function.
 #' @param latestonly If \code{TRUE} (default), the function returns summary of 
-#' latest actions in single row. If \code{FALSE}, the function returns \code{data.frame} 
+#' latest actions (and introduced date) in single row. If \code{FALSE}, the function returns \code{data.frame} 
 #' object of all actions and their dates and timings.
 #' @param progress If \code{TRUE}, show progress bar for the processing of multiple bills.
 #' 
 #' @return If \code{latestonly==TRUE}, returns \code{data.frame} object with following 
 #' contents (single row):
 #' \itemize{
+#'   \item \code{IntroducedDate}: Date of Introduction in Actions Overview
 #'   \item \code{ActLatestDate_Overview}: Date of Latest Action in Actions Overview
 #'   \item \code{ActLatestText_Overview}: Overview Content of Latest Action in Actions Overview
 #'   \item \code{ActLatestDate_All}: Date of Latest Action in All Actions
@@ -749,7 +750,8 @@ collectAction <- function(x,
       latestRCH <- which(!is.na(aa$rollnumber) & aa$Chamber %in% "House")
       latestRCS <- which(!is.na(aa$rollnumber) & aa$Chamber %in% "Senate")
       
-      res <- data.frame(ActLatestDate_Overview = aa$Date[latestov],
+      res <- data.frame(IntroducedDate = NA,
+                        ActLatestDate_Overview = aa$Date[latestov],
                         ActLatestText_Overview = aa$Overview[latestov],
                         ActLatestDate_All = aa$Date[1],
                         ActLatestText_All = aa$Detail[1],
@@ -774,6 +776,10 @@ collectAction <- function(x,
                         RCLatestYea_Senate = aa$rollYea[latestRCS[1]],
                         RCLatestNay_Senate = aa$rollNay[latestRCS[1]],
                         stringsAsFactors = FALSE)
+      
+      if (length(which(aa$Overview=="Introduced"))==1) {
+        res$IntroducedDate = aa$Date[which(aa$Overview=="Introduced")]
+      }
     }
     
     return(res)

@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">congressbills</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.0.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.1.1</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
     <tr>
       <th>latestonly</th>
       <td><p>If <code>TRUE</code> (default), the function returns summary of 
-latest actions in single row. If <code>FALSE</code>, the function returns <code>data.frame</code> 
+latest actions (and introduced date) in single row. If <code>FALSE</code>, the function returns <code>data.frame</code> 
 object of all actions and their dates and timings.</p></td>
     </tr>
     <tr>
@@ -128,6 +128,7 @@ object of all actions and their dates and timings.</p></td>
 
     <p>If <code>latestonly==TRUE</code>, returns <code>data.frame</code> object with following 
 contents (single row):</p><ul>
+<li><p><code>IntroducedDate</code>: Date of Introduction in Actions Overview</p></li>
 <li><p><code>ActLatestDate_Overview</code>: Date of Latest Action in Actions Overview</p></li>
 <li><p><code>ActLatestText_Overview</code>: Overview Content of Latest Action in Actions Overview</p></li>
 <li><p><code>ActLatestDate_All</code>: Date of Latest Action in All Actions</p></li>
@@ -176,22 +177,22 @@ contents (single row):</p><ul>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>tgturl</span> <span class='kw'>&lt;-</span> <span class='st'>"https://www.congress.gov/bill/115th-congress/house-bill/2"</span>
 <span class='no'>bill2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='scrapeBill.html'>scrapeBill</a></span>(<span class='no'>tgturl</span>)
-<span class='fu'>collectAction</span>(<span class='no'>bill2</span>)</div><div class='output co'>#&gt;   ActLatestDate_Overview ActLatestText_Overview ActLatestDate_All
-#&gt; 1             12/20/2018             Became Law        12/20/2018
-#&gt;                ActLatestText_All VoteTimes_House VoteLatestDate_House
-#&gt; 1 Became Public Law No: 115-334.               0                 &lt;NA&gt;
-#&gt;   VoteLatestType_House VoteLatestText_House VoteTimes_Senate
-#&gt; 1                 &lt;NA&gt;                 &lt;NA&gt;                0
-#&gt;   VoteLatestDate_Senate VoteLatestType_Senate VoteLatestText_Senate
-#&gt; 1                  &lt;NA&gt;                  &lt;NA&gt;                  &lt;NA&gt;
-#&gt;   VoteTimes_House.1 RCLatestDate_House RCLatestText_House RCLatestNumber_House
-#&gt; 1                 0               &lt;NA&gt;               &lt;NA&gt;                   NA
-#&gt;   RCLatestYea_House RCLatestNay_House RCTimes_Senate RCLatestDate_Senate
-#&gt; 1                NA                NA              0                &lt;NA&gt;
-#&gt;   RCLatestText_Senate RCLatestNumber_Senate RCLatestYea_Senate
-#&gt; 1                &lt;NA&gt;                    NA                 NA
-#&gt;   RCLatestNay_Senate
-#&gt; 1                 NA</div><div class='input'> 
+<span class='fu'>collectAction</span>(<span class='no'>bill2</span>)</div><div class='output co'>#&gt;   IntroducedDate ActLatestDate_Overview ActLatestText_Overview
+#&gt; 1     04/12/2018             12/20/2018             Became Law
+#&gt;   ActLatestDate_All              ActLatestText_All VoteTimes_House
+#&gt; 1        12/20/2018 Became Public Law No: 115-334.               0
+#&gt;   VoteLatestDate_House VoteLatestType_House VoteLatestText_House
+#&gt; 1                 &lt;NA&gt;                 &lt;NA&gt;                 &lt;NA&gt;
+#&gt;   VoteTimes_Senate VoteLatestDate_Senate VoteLatestType_Senate
+#&gt; 1                0                  &lt;NA&gt;                  &lt;NA&gt;
+#&gt;   VoteLatestText_Senate VoteTimes_House.1 RCLatestDate_House RCLatestText_House
+#&gt; 1                  &lt;NA&gt;                 0               &lt;NA&gt;               &lt;NA&gt;
+#&gt;   RCLatestNumber_House RCLatestYea_House RCLatestNay_House RCTimes_Senate
+#&gt; 1                   NA                NA                NA              0
+#&gt;   RCLatestDate_Senate RCLatestText_Senate RCLatestNumber_Senate
+#&gt; 1                &lt;NA&gt;                &lt;NA&gt;                    NA
+#&gt;   RCLatestYea_Senate RCLatestNay_Senate
+#&gt; 1                 NA                 NA</div><div class='input'> 
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
