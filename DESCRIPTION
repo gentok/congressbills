@@ -1,6 +1,6 @@
 Package: congressbills
 Title: Extract and Manipulate Information of US Congress Bills
-Version: 0.0.1.001
+Version: 0.0.1.002
 Authors@R: person("Gento", "Kato", email = "gento.badger@gmail.com", role = "cre")
 Description: Extract and manipulate bill information from US Congress website (https://www.congress.gov).
 Depends: R (>= 3.5)

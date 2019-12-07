@@ -158,16 +158,20 @@ collectTitle <- function(x,
     otmeta1 <- gsub("Official Title(s|) ","", otmeta1)
     # Official Titles Chamber
     otdivide <- grep("Official Title(s|) - ", otmeta)
-    otmeta2 <-  splitAt(otmeta, otdivide)
-    otmeta2 <- sapply(otmeta2, function(k) length(k[grep("Official Title(s|) (as|on)", k)]))
-    if (otdivide[1]==1) {
-      otnames <- otmeta[grep("Official Title(s|) - ", otmeta)]
+    if (length(otdivide)==0) {
+      otmeta2 <- "Unspecified"
     } else {
-      otnames <- c("Unspecified", otmeta[grep("Official Title(s|) - ", otmeta)])
+      otmeta2 <-  splitAt(otmeta, otdivide)
+      otmeta2 <- sapply(otmeta2, function(k) length(k[grep("Official Title(s|) (as|on)", k)]))
+      if (otdivide[1]==1) {
+        otnames <- otmeta[grep("Official Title(s|) - ", otmeta)]
+      } else {
+        otnames <- c("Unspecified", otmeta[grep("Official Title(s|) - ", otmeta)])
+      }
+      otmeta2 <- rbind(otmeta2, otnames)
+      otmeta2 <- unlist(apply(otmeta2, 2, function(k) rep(k[2],k[1])))
+      otmeta2 <- str_extract(otmeta2, "House|Senate|Unspecified")
     }
-    otmeta2 <- rbind(otmeta2, otnames)
-    otmeta2 <- unlist(apply(otmeta2, 2, function(k) rep(k[2],k[1])))
-    otmeta2 <- str_extract(otmeta2, "House|Senate|Unspecified")
     # Official Titles Text
     ottext <- ot %>% html_nodes("p") %>% html_text()
     # Compile into Data
@@ -187,16 +191,20 @@ collectTitle <- function(x,
       stmeta1 <- gsub("Short Title(s|) ","", stmeta1)
       # Short Titles Chamber
       stdivide <- grep("Short Title(s|) - ", stmeta)
-      stmeta2 <-  splitAt(stmeta, stdivide)
-      stmeta2 <- sapply(stmeta2, function(k) length(k[grep("Short Title(s|) (as|on)|Other Short Titles", k)]))
-      if (stdivide[1]==1) {
-        stnames <- stmeta[grep("Short Title(s|) - ", stmeta)]
+      if (length(stdivide)==0) {
+        stmeta2 <- "Unspecified"
       } else {
-        stnames <- c("Unspecified", stmeta[grep("Short Title(s|) - ", stmeta)])
+        stmeta2 <-  splitAt(stmeta, stdivide)
+        stmeta2 <- sapply(stmeta2, function(k) length(k[grep("Short Title(s|) (as|on)|Other Short Titles", k)]))
+        if (stdivide[1]==1) {
+          stnames <- stmeta[grep("Short Title(s|) - ", stmeta)]
+        } else {
+          stnames <- c("Unspecified", stmeta[grep("Short Title(s|) - ", stmeta)])
+        }
+        stmeta2 <- rbind(stmeta2, stnames)
+        stmeta2 <- unlist(apply(stmeta2, 2, function(k) rep(k[2],k[1])))
+        stmeta2 <- str_extract(stmeta2, "House|Senate|Unspecified")
       }
-      stmeta2 <- rbind(stmeta2, stnames)
-      stmeta2 <- unlist(apply(stmeta2, 2, function(k) rep(k[2],k[1])))
-      stmeta2 <- str_extract(stmeta2, "House|Senate|Unspecified")
       # Short Titles Text
       sttext <- st %>% html_nodes(xpath=".//p|.//ul") %>% html_text
       sttext <- str_squish(sttext)
@@ -1114,8 +1122,19 @@ collectText <- function(x,
     # All-info HTML
     tgt <- x$text
     
-    # Look for Location of Texts
+    # Throw Out Warning if Digital Text is not available
     a <- tgt %>% html_nodes("div") 
+    tmploc <- which(html_attr(a, "id")=="main")
+    if (length(tmploc)==1) {
+      tmp <- a[tmploc] %>% html_text
+      if (grepl("Digital text is not available",tmp)) {
+        warning("Digital text is not available!")
+        b <- "Not Available"
+        return(b)
+      }
+    }
+    
+    # Look for Location of Texts
     loc1 <- which(html_attr(a, "id")=="textSelector") + 1
     loc2 <- loc1+1
     att1 <- html_attrs(a[loc1])[[1]]

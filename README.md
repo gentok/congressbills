@@ -33,7 +33,8 @@ The package website is published [HERE](https://gentok.github.io/congressbills/)
 
 ## Updates Log
 
-* 06/21/2019 Version 0.0.1.001 Adding searchBill and small change in collectAction output.
+* 12/06/2019 Version 0.0.1.002 bug fix in collectBillData function
+* 06/21/2019 Version 0.0.1.001 adding searchBill and small change in collectAction output
 * 03/19/2019 Version 0.0.0.003 bug fix and add BillIDfromURL function
 * 03/19/2019 Version 0.0.0.002 bug fix and adding getBill function
 * 03/18/2019 Version 0.0.0.001 released
