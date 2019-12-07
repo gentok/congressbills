@@ -1362,7 +1362,8 @@ collectBillData <- function(x,
       } else if (expand=="Text") {
         etmp <- collectText(x, allinone=FALSE, progress = progress)
         cDF <- function(k) {
-          c1 <- names(k)
+          c1 <- names(k) 
+          if (length(c1)==0) c1 <- "Not Available"
           c2 <- unlist(k)
           c <- data.frame(Order = seq(1,length(k),1),
                           Section = c1,
