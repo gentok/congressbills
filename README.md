@@ -1,5 +1,5 @@
 # <code>congressbills</code> Package
-Developped by Gento Kato (Last Updated: 06/21/2019) 
+Developed by Gento Kato (Last Updated: 12/06/2019) 
 
 ## Description
 
